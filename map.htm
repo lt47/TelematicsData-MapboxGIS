@@ -1,0 +1,309 @@
+﻿<html><head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+   
+    <link rel="stylesheet" href="https://www.fort-seven.com/scriptsanddocs/senmapstyle.css"/>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
+    
+    
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-75065234-3', 'auto');
+			ga('send', 'pageview', '/hypnoticwind.html');
+		</script>
+		<script>
+		window.goatcounter = {
+			path: '/hypnoticwind.html'
+		};
+		</script>
+		<script data-goatcounter="https://htmlpasta.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script></head>
+
+<body>
+    <div id="map" style="width:100%; height:100%;"></div>
+    <div class="map-overlay" id="routeupdates">
+        <center>
+            <h2>Red Route Updates</h2></center>
+        <div id="test">
+
+        </div>
+    </div>
+    <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoibHRlbnVtYWgiLCJhIjoiY2s1c2s5N2d5MDJyaTNmbG5jNG1jZHRqdCJ9.buKhkiCOYAkRlzewCL6Qdw';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/ltenumah/ck6fwo3jb37n31itg0yj3d0rj',
+                zoom: 15,
+                center: [-75.700929, 45.4235937],
+            });
+
+            map.loadImage('https://lt47.github.io/AAG/iconmonstr-bus-2-24yellow.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('bus1marker', image);
+            });
+
+            var bus1 = 'https://www.fort-seven.com/scriptsanddocs/bus1.json';
+            map.on('load', function() {
+                window.setInterval(function() {
+                    map.getSource('points').setData(bus1);
+                }, 500);
+
+                map.addSource('points', {
+                    type: 'geojson',
+                    data: bus1
+                });
+                map.addLayer({
+                    'id': 'points',
+                    'type': 'symbol',
+                    'source': 'points',
+                    'layout': {
+                        'icon-image': 'bus1marker',
+                        'icon-size': 0.09
+                    }
+                });
+
+                map.on('click', 'points', function(e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = e.features[0].properties.name;
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'points', function() {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'points', function() {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+
+            map.loadImage('https://lt47.github.io/AAG/redbus.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('bus2marker', image);
+            });
+
+            var bus2 = 'https://www.fort-seven.com/scriptsanddocs/bus2.json';
+            map.on('load', function() {
+                window.setInterval(function() {
+                    map.getSource('points1').setData(bus2);
+                }, 500);
+
+                map.addSource('points1', {
+                    type: 'geojson',
+                    data: bus2
+                });
+                map.addLayer({
+                    'id': 'points1',
+                    'type': 'symbol',
+                    'source': 'points1',
+                    'layout': {
+                        'icon-image': 'bus2marker',
+                        'icon-size': 0.09
+                    }
+                });
+
+                map.on('click', 'points1', function(e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = e.features[0].properties.name;
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'points1', function() {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'points1', function() {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+
+            map.loadImage('https://lt47.github.io/AAG/redbus.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('bus3marker', image);
+            });
+
+            var bus3 = 'https://www.fort-seven.com/scriptsanddocs/bus3.json';
+            map.on('load', function() {
+                window.setInterval(function() {
+                    map.getSource('points2').setData(bus3);
+                }, 500);
+
+                map.addSource('points2', {
+                    type: 'geojson',
+                    data: bus3
+                });
+                map.addLayer({
+                    'id': 'points2',
+                    'type': 'symbol',
+                    'source': 'points2',
+                    'layout': {
+                        'icon-image': 'bus3marker',
+                        'icon-size': 0.09
+                    }
+                });
+                map.on('click', 'points2', function(e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = e.features[0].properties.name;
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'points2', function() {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'points2', function() {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+
+            map.loadImage('https://lt47.github.io/AAG/blackbus.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('bus4marker', image);
+            });
+
+            var bus4 = 'https://www.fort-seven.com/scriptsanddocs/bus4.json';
+            map.on('load', function() {
+                window.setInterval(function() {
+                    map.getSource('points3').setData(bus4);
+                }, 500);
+
+                map.addSource('points3', {
+                    type: 'geojson',
+                    data: bus4
+                });
+                map.addLayer({
+                    'id': 'points3',
+                    'type': 'symbol',
+                    'source': 'points3',
+                    'layout': {
+                        'icon-image': 'bus4marker',
+                        'icon-size': 0.09
+                    }
+                });
+                map.on('click', 'points3', function(e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = e.features[0].properties.name;
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'points3', function() {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'points3', function() {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+
+            map.loadImage('https://lt47.github.io/AAG/blackbus.png', function(error, image) {
+                if (error) throw error;
+                map.addImage('bus5marker', image);
+            });
+
+            var bus5 = 'https://www.fort-seven.com/scriptsanddocs/bus5.json';
+            map.on('load', function() {
+                window.setInterval(function() {
+                    map.getSource('points4').setData(bus5);
+                }, 500);
+
+                map.addSource('points4', {
+                    type: 'geojson',
+                    data: bus5
+                });
+                map.addLayer({
+                    'id': 'points4',
+                    'type': 'symbol',
+                    'source': 'points4',
+                    'layout': {
+                        'icon-image': 'bus5marker',
+                        'icon-size': 0.09
+                    }
+                });
+                map.on('click', 'points4', function(e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = e.features[0].properties.name;
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'points4', function() {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'points4', function() {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
+
+            $(document).ready(function() {
+                function update_redroutenotifications() {
+                    $.getJSON("https://www.fort-seven.com/scriptsanddocs/redroute_notificationfeed.json", function(data) {
+                        var text = data.slice(-1)[0].rule;
+                        var text1 = data.slice(-2)[0].rule;
+                        var text2 = data.slice(-3)[0].rule;
+                        var text3 = data.slice(-4)[0].rule;
+                        var text4 = data.slice(-5)[0].rule;
+                        console.log("JSON Data: " + JSON.stringify(text));
+                        console.log("JSON Data: " + JSON.stringify(text1));
+                        console.log("JSON Data: " + JSON.stringify(text2));
+                        console.log("JSON Data: " + JSON.stringify(text3));
+                        console.log("JSON Data: " + JSON.stringify(text4));
+                        document.getElementById('test').innerHTML = JSON.stringify(text) + "<br/>" + "<br/>" + JSON.stringify(text1) + "<br/>" + "<br/>" + JSON.stringify(text2) + "<br/>" + "<br/>" + JSON.stringify(text3) + "<br/>" + "<br/>" + JSON.stringify(text4);
+                    });
+                    return false;
+                }
+                update_redroutenotifications();
+
+                var interval = setInterval(update_redroutenotifications, 500);
+            });
+    </script>
+
+
+</body></html>
